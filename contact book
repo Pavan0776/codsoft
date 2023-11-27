@@ -1,0 +1,63 @@
+class ContactBook:
+    def __init__(self):
+        self.contacts = {}
+
+    def add_contact(self, name, phone, email):
+        self.contacts[name] = {'Phone': phone, 'Email': email}
+        print(f"Contact '{name}' added to the contact book.")
+
+    def view_contacts(self):
+        if not self.contacts:
+            print("No contacts in the contact book.")
+        else:
+            print("\nContact List:")
+            for name, details in self.contacts.items():
+                print(f"Name: {name}, Phone: {details['Phone']}, Email: {details['Email']}")
+
+    def search_contact(self, keyword):
+        result = []
+        for name, details in self.contacts.items():
+            if keyword.lower() in name.lower() or keyword in details['Phone'] or keyword in details['Email']:
+                result.append((name, details))
+        return result
+
+def main():
+    contact_book = ContactBook()
+
+    while True:
+        print("\nContact Book Menu:")
+        print("1. Add Contact")
+        print("2. View Contacts")
+        print("3. Search Contact")
+        print("4. Exit")
+
+        choice = input("Enter your choice (1-4): ")
+
+        if choice == '1':
+            name = input("Enter name: ")
+            phone = input("Enter phone number: ")
+            email = input("Enter email address: ")
+            contact_book.add_contact(name, phone, email)
+
+        elif choice == '2':
+            contact_book.view_contacts()
+
+        elif choice == '3':
+            keyword = input("Enter name, phone number, or email to search: ")
+            results = contact_book.search_contact(keyword)
+            if results:
+                print("\nSearch Results:")
+                for name, details in results:
+                    print(f"Name: {name}, Phone: {details['Phone']}, Email: {details['Email']}")
+            else:
+                print("No matching contacts found.")
+
+        elif choice == '4':
+            print("Exiting Contact Book. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please enter a number between 1 and 4.")
+
+if __name__ == "__main__":
+    main()
